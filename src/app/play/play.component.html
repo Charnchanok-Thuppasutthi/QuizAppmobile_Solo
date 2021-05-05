@@ -1,4 +1,6 @@
-<ActionBar [title]="title"></ActionBar>
+<ActionBar>
+  <label class="title" [text]="questionText"></label>
+</ActionBar>
 <FlexLayout >
     <StackLayout>
         <Image *ngIf="GotImage" [src]="Image" height="200" width="auto" ></Image>

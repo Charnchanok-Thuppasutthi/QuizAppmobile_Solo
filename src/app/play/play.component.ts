@@ -23,6 +23,11 @@ export class PlayComponent implements OnInit {
   Image:string="";
   GotImage:boolean;
 
+  timeLeft: number = 30;
+  time = "Time : " + String(this.timeLeft)
+  //time= String(this.timeLeft)
+  questionText :string;
+  interval;
   constructor( private categoryService : CategoryService, private route: ActivatedRoute, private router : Router ) {}
 
   ngOnInit(): void {
@@ -31,7 +36,26 @@ export class PlayComponent implements OnInit {
     this.lengthQuestion = this.selected_category.questions.length;
     this.selectedQuestion();
     this.title = this.selected_category.name;
+    this.startTimer();
   }
+
+  startTimer() {
+    this.questionText = "start"
+    clearInterval(this.interval)
+    this.interval = setInterval(() => {
+      console.log(this.timeLeft)
+    if(this.timeLeft > 0) {
+        this.timeLeft--;
+        this.questionText =  String(this.time)+ "  Question:"+ String(this.number) + "of"+ String(this.lengthQuestion)
+        this.time = "Time : " + String(this.timeLeft)
+        
+    } else {
+      this.collectSelected( 0 );
+      this.timeLeft = 10; //set time per question
+    }
+    },1000)
+  }
+
   selectedQuestion(){
       this.checkImage();
       //console.log(this.selected_category.questions[this.number]);//undefined if last question
@@ -48,7 +72,8 @@ export class PlayComponent implements OnInit {
         this.selected_question = this.selected_category.questions[this.number];
         this.number+=1;
       }
-      console.log("Question:",this.number,"of",this.lengthQuestion)
+      this.timeLeft = 30;
+      //console.log("Question:",this.number,"of",this.lengthQuestion)
       console.log("Score",this.score)
     }
     checkImage(){
