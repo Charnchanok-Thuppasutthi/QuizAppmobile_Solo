@@ -27,14 +27,12 @@ export class PlayComponent implements OnInit {
   timeKeep: number = 30;
   finished: number = 0;
   time = "Time : " + String(this.timeKeep)
-  //time= String(this.timeLeft)
   questionText :string;
   interval;
   constructor( private categoryService : CategoryService, private route: ActivatedRoute, private router : Router ) {
     if (application.android){
       application.android.on(application.AndroidApplication.activityBackPressedEvent,(args: any) =>{
         clearInterval(this.interval)
-        console.log("BACK")
       })
     }
   }
