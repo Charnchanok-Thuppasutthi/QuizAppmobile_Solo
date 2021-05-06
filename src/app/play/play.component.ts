@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Router } from '@angular/router';
+import * as application from "@nativescript/core/application";
 
 import { CategoryService } from '../category/category.service'
 import { CategoryForm , QuestionForm} from '../category/category' 
@@ -23,12 +24,20 @@ export class PlayComponent implements OnInit {
   Image:string="";
   GotImage:boolean;
 
-  timeLeft: number = 30;
-  time = "Time : " + String(this.timeLeft)
+  timeKeep: number = 30;
+  finished: number = 0;
+  time = "Time : " + String(this.timeKeep)
   //time= String(this.timeLeft)
   questionText :string;
   interval;
-  constructor( private categoryService : CategoryService, private route: ActivatedRoute, private router : Router ) {}
+  constructor( private categoryService : CategoryService, private route: ActivatedRoute, private router : Router ) {
+    if (application.android){
+      application.android.on(application.AndroidApplication.activityBackPressedEvent,(args: any) =>{
+        clearInterval(this.interval)
+        console.log("BACK")
+      })
+    }
+  }
 
   ngOnInit(): void {
     const id = +this.route.snapshot.params.id
@@ -40,28 +49,33 @@ export class PlayComponent implements OnInit {
   }
 
   startTimer() {
-    this.questionText = "start"
     clearInterval(this.interval)
+    if (this.tempSelectedAnswer == 0 ){
+      this.questionText = "Start"
+    }
+    else{
+      this.questionText = "Next Question"
+    }
     this.interval = setInterval(() => {
-      console.log(this.timeLeft)
-    if(this.timeLeft > 0) {
-        this.timeLeft--;
+      console.log(this.timeKeep)
+    if(this.timeKeep > this.finished) {   
+        this.time = "Time : " + String(this.timeKeep)
         this.questionText =  String(this.time)+ "  Question:"+ String(this.number) + "of"+ String(this.lengthQuestion)
-        this.time = "Time : " + String(this.timeLeft)
-        
+        this.timeKeep--;
     } else {
+      this.questionText = "Time's up"
       this.collectSelected( 0 );
-      this.timeLeft = 10; //set time per question
     }
     },1000)
   }
-
+  
   selectedQuestion(){
       this.checkImage();
-      //console.log(this.selected_category.questions[this.number]);//undefined if last question
+      this.startTimer();
       if (this.number == this.lengthQuestion){//last question
         this.checkAnswer();
         this.router.navigate(['/result',this.selected_category.id,this.score]);
+        clearInterval(this.interval)
         }
       else if (this.tempSelectedAnswer == 0 ){//start first question
         this.selected_question = this.selected_category.questions[this.number];
@@ -72,9 +86,7 @@ export class PlayComponent implements OnInit {
         this.selected_question = this.selected_category.questions[this.number];
         this.number+=1;
       }
-      this.timeLeft = 30;
-      //console.log("Question:",this.number,"of",this.lengthQuestion)
-      console.log("Score",this.score)
+      this.timeKeep = 30;
     }
     checkImage(){
       if(this.number != this.lengthQuestion){
@@ -86,7 +98,7 @@ export class PlayComponent implements OnInit {
           this.GotImage = false
         }
       }
-      else{
+      else{//pass
         
       }
     }

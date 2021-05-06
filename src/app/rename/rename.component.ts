@@ -50,7 +50,6 @@ export class RenameComponent implements OnInit {
       this.NotQuestion = false;
       console.log(QuestionData.imgPath)
       this.Image = QuestionData.imgPath
-
     }
     else { 
       var ChoiceData = this.categoryService.getSelectedChoiceData(this.CategoryID, this.QuestionID, this.ChoiceID)
