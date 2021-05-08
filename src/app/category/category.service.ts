@@ -6,6 +6,16 @@ import * as AppSettings from '@nativescript/core/application-settings'
   providedIn: 'root',
 })
 export class CategoryService {
+  /*
+  { id:0 , name: "", questions: new Array<QuestionForm>(
+    { id:1, question:"", imgPath:"" ,choice: new Array<ChoiceForm>(
+      { id:, choice:""},
+      
+    ),
+  answer:
+    },
+  }
+  */
     private temp_Category = new Array<CategoryForm> (
       { id:0 , name: "Test QuickMath", questions: new Array<QuestionForm>(
         { id:1, question:"1+1=?", imgPath:"" ,choice: new Array<ChoiceForm>(
@@ -62,9 +72,9 @@ export class CategoryService {
     ),
     answer:2
     },
-  )
-  },
-  { id: 3 , name: "Meaning English with Thai", questions: new Array<QuestionForm>(
+    )
+    },
+    { id: 3 , name: "Meaning English with Thai", questions: new Array<QuestionForm>(
     { id:1, question:"Essential", imgPath:"" ,choice: new Array<ChoiceForm>(
       { id:1, choice:"สำคัญ" },
       { id:2, choice:"ทั่วไป" },
@@ -106,9 +116,9 @@ export class CategoryService {
     answer:4
     },
 
-  )
-  },
-  { id: 4 , name: "National Flag", questions: new Array<QuestionForm>(
+    )
+    },
+    { id: 4 , name: "National Flag", questions: new Array<QuestionForm>(
     { id:1, question:"Which country does this flag belong to? ", imgPath:"~/app/img/question/1.jpg" ,choice: new Array<ChoiceForm>(
       { id:1, choice:"Sweden"},
       { id:2, choice:"Ireland"},
@@ -190,7 +200,38 @@ export class CategoryService {
     answer:1
     },
   )
-  }
+  },
+  { id:5 , name: "Logo Car", questions: new Array<QuestionForm>(
+    { id:1, question:"What is this logo?", imgPath:"~/app/img/car/chery.jpg" ,choice: new Array<ChoiceForm>(
+      { id:1, choice:"Cherry"},
+      { id:2, choice:"Chery"},
+      { id:3, choice:"Citroen"},
+    ),
+  answer:2
+    },
+    { id:2, question:"What is this logo?", imgPath:"~/app/img/car/bmw-logo.png" ,choice: new Array<ChoiceForm>(
+      { id:1, choice:"BMW"},
+      { id:2, choice:"Toyota"},
+      { id:3, choice:"Nissan"},
+    ),
+  answer:1
+    },
+    { id:3, question:"What is this logo?", imgPath:"~/app/img/car/nissan.jpg" ,choice: new Array<ChoiceForm>(
+      { id:1, choice:"Honda"},
+      { id:2, choice:"Nissan"},
+      { id:3, choice:"Jaguar"},
+    ),
+  answer:2
+    },
+    { id:4, question:"What is this logo?", imgPath:"~/app/img/car/audi.jpg" ,choice: new Array<ChoiceForm>(
+      { id:1, choice:"audi"},
+      { id:2, choice:"susuki"},
+      { id:3, choice:"mini"},
+    ),
+  answer:1
+    },
+    )}
+  
     )
   saveCategory : Array<CategoryForm>  
 
